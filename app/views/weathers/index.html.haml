@@ -1,0 +1,35 @@
+
+.row
+  .col.s12
+    %h3.center-align Hi Henri | Weather App
+.row
+  .col.s12
+    = form_for :location, url: user_locations_path(user_id: @current_user.id), method: :post do |f|
+      .col.s6.offset-s3
+        .input-field.col.s6
+          = f.text_field :zip_code, placeholder: "93401", class: "validate"
+          %label{for: :zip_code}
+        .input-field.col.s4.offset-s2
+          %button{class: 'btn-large waves-effect waves-light'}
+            Submit
+            %i.material-icons.right cloud
+.row
+  .col.s12
+    %table.highlight
+      %thead
+        %tr
+          %td City
+          %td Country
+          %td Current Temp
+      %tbody
+        - if @locations.blank?
+          %tr
+            %td{colspan: "4", class: "center"}
+              No Locations Saved
+        - else
+          - @locations.each do |location|
+            %tr
+              %td= location.city
+              %td= location.country
+              -# %td= location.get_last_temp
+              %td 72°

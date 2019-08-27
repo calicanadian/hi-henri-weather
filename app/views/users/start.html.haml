@@ -1,2 +1,11 @@
-= form_for :user, url: registrations_path do |f|
-  = f.submit 'GET STARTED', html: {id: 'registrations_submit_button', class: 'button'}
+.row
+  .col.s6.offset-s3.center
+    .card.large
+      .card-image.waves-effect.waves-block.waves-light
+        = image_tag('vineyard.jpg', class: 'activator')
+      .card-content
+      = form_for :user, url: registrations_path do |f|
+        -# = f.submit 'GET STARTED', type: 'button', id: 'registrations_submit_button', class: 'btn-large waves-effect waves-light'
+        %button{class: 'btn-large waves-effect waves-light', name: 'commit'}
+          GET STARTED
+          %i.material-icons.right person_add

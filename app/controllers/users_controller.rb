@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_before_action :set_current_user, only: [:start]
   before_action :get_user_and_locations, only: [:show]
 
   def start

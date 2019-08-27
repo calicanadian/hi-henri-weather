@@ -2,3 +2,14 @@
 $primary-color: color("blue", "lighten-2") !default;
 $secondary-color: color("yello", "base") !default;
 @import "materialize";
+
+
+nav {
+  .brand-logo {
+    img {
+      max-width: 100px;
+      height: auto;
+      vertical-align: text-bottom;
+    }
+  }
+}

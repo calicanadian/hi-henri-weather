@@ -4,10 +4,10 @@
     %h3.center-align Hi Henri | Weather App
 .row
   .col.s12
-    = form_for :location, url: user_locations_path(user_id: @current_user.id), method: :post do |f|
+    = form_for :weather, url: get_weather_url, html: {id: "get_weather_form"}, method: :post do |f|
       .col.s6.offset-s3
         .input-field.col.s6
-          = f.text_field :zip_code, placeholder: "93401", class: "validate"
+          = f.text_field :zip_code, placeholder: "93401", class: "validate", id: 'weather_zip_code'
           %label{for: :zip_code}
         .input-field.col.s4.offset-s2
           %button{class: 'btn-large waves-effect waves-light'}
@@ -31,5 +31,4 @@
             %tr
               %td= location.city
               %td= location.country
-              -# %td= location.get_last_temp
-              %td 72°
+              %td= "#{location.temperature.round}°F"

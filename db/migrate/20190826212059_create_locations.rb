@@ -7,6 +7,7 @@ class CreateLocations < ActiveRecord::Migration[5.2]
       t.string :country
       t.string :city
       t.integer :display_order
+      t.decimal :temperature
 
       t.timestamps
     end

@@ -5,7 +5,8 @@ class User < ApplicationRecord
   validates_presence_of :email
   validates_uniqueness_of :email
 
-  has_many :locations
+  has_many :user_locations
+  has_many :locations, through: :user_locations
 
   def self.generate_new_user
     # Just create a new user with Faker

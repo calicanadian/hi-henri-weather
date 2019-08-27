@@ -1,8 +1,8 @@
 class Weather < ApplicationRecord
 
-  def check_weather_by_zip(zip_code)
-    @conn = Faraday.new(url: ENV['WEATHER_API_URL']) do |api|
-      api.request   :url_record
+  def self.check_weather_by_zip(zip_code)
+    @conn = Faraday.new(url: "#{ENV['WEATHER_API_URL']}?zip=#{zip_code},us") do |api|
+      api.request   :url_encoded
       api.request   :retry, max: 0
       api.options.timeout = 30
       api.options.open_timeout = 5
@@ -15,13 +15,13 @@ class Weather < ApplicationRecord
         req.url ENV['WEATHER_API_URL']
         req.headers['Content-Type'] = 'application/json'
         req.headers['x-api-key'] = ENV['WEATHER_API_KEY']
-        req.body = { 'zip': "#{zip_code},us", 'appid': ENV['WEATHER_APP_ID']}
       end
       if response.status == 200
         return JSON.parse(response.body)
       end
     rescue Exception => error
-      Rails.logger(error.message)
+      puts error.message
+      Rails.logger.info error.message
     end
   end
 end

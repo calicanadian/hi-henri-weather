@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2019_08_26_212142) do
     t.string "country"
     t.string "city"
     t.integer "display_order"
+    t.decimal "temperature"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

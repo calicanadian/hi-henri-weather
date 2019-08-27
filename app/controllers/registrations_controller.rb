@@ -1,5 +1,5 @@
 class RegistrationsController < ApplicationController
-
+  skip_before_action :set_current_user
   def create
     user = User.generate_new_user
 

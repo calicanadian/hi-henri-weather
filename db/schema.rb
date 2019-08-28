@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2019_08_26_212142) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "locations", force: :cascade do |t|
     t.decimal "lon"
     t.decimal "lat"
@@ -20,13 +23,16 @@ ActiveRecord::Schema.define(version: 2019_08_26_212142) do
     t.string "city"
     t.integer "display_order"
     t.decimal "temperature"
+    t.decimal "temp_min"
+    t.decimal "temp_max"
+    t.decimal "temp_avg"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "user_locations", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "location_id"
+    t.bigint "user_id"
+    t.bigint "location_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["location_id"], name: "index_user_locations_on_location_id"
@@ -41,4 +47,6 @@ ActiveRecord::Schema.define(version: 2019_08_26_212142) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "user_locations", "locations"
+  add_foreign_key "user_locations", "users"
 end

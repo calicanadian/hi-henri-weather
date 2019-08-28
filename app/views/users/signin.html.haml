@@ -1,0 +1,12 @@
+.row
+  .col.s6.offset-s3.center
+    = form_for :user, url: sessions_path do |f|
+      .row
+        .input-field.col.s12
+          = f.text_field :email, class: 'validate'
+          = f.label :email
+        .input-field.col.s12
+          = f.password_field :password, class: 'validate'
+          = f.label :password
+      %button{class: 'btn-large waves-effect waves-light', name: 'commit'}
+        UPDATE

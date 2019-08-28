@@ -1,4 +1,5 @@
 class WeathersController < ApplicationController
+  include WeathersHelper
 
   def index
     if @current_user
@@ -11,25 +12,47 @@ class WeathersController < ApplicationController
 
   def get_weather
     zip_code = params[:weather][:zip_code].blank? ? '93401' : params[:weather][:zip_code]
-    @weather = JSON.parse(Weather.check_weather_by_zip(zip_code).to_json, object_class: OpenStruct)
-    puts ""
-    puts ""
-    puts @weather&.coord[:lon]
-    puts @weather&.coord[:lat]
-    puts ((@weather&.main[:temp] - 273.15) * 9/5 + 32).round
-    puts @weather&.name
-    puts @weather&.sys[:country]
-    puts ""
-    puts ""
+    @weather = JSON.parse(get_weather_by_zip(zip_code).to_json, object_class: OpenStruct)
     @location = Location.create!(
       lon: @weather&.coord[:lon],
       lat: @weather&.coord[:lat],
       zipcode: zip_code,
       country: @weather&.sys[:country],
       city: @weather&.name,
-      temperature: ((@weather&.main[:temp] - 273.15) * 9/5 + 32).round)
+      temperature: @weather&.main[:temp],
+      temp_min: @weather&.main[:temp_min],
+      temp_max: @weather&.main[:temp_max],
+      temp_avg: get_average_temp(@weather&.main[:temp_min], @weather&.main[:temp_max]))
     UserLocation.create!(user_id: @current_user.id, location_id: @location.id)
     redirect_to root_url
+  end
+
+  def refresh_weather
+    p "PARAMS: #{params.inspect}"
+    zip_code = params[:zipcode]
+    locationId = params[:location_id]
+    @weather = JSON.parse(get_weather_by_zip(zip_code).to_json, object_class: OpenStruct)
+    @location = Location.find(locationId)
+    if @location.blank?
+      render json: {message: 'Location not found', status: 404}
+    else
+      if @location.update_attributes(
+          temperature: @weather&.main[:temp],
+          temp_min: @weather&.main[:temp_min],
+          temp_max: @weather&.main[:temp_max],
+          temp_avg: get_average_temp(@weather&.main[:temp_min], @weather&.main[:temp_max])
+        )
+        render json: {location: @location, status: :success }
+      else
+        render json: {errors: @location.errors, status: 422}
+      end
+    end
+    # begin
+    #
+    # rescue Exception => error
+    #   render json: {error: error.message, status: 422}
+    #   Rails.logger.info error.message
+    # end
   end
 end
 

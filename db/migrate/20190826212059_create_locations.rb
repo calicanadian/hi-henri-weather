@@ -8,6 +8,9 @@ class CreateLocations < ActiveRecord::Migration[5.2]
       t.string :city
       t.integer :display_order
       t.decimal :temperature
+      t.decimal :temp_min
+      t.decimal :temp_max
+      t.decimal :temp_avg
 
       t.timestamps
     end

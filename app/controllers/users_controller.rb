@@ -1,12 +1,8 @@
 class UsersController < ApplicationController
   skip_before_action :set_current_user, only: [:start]
-  before_action :get_user_and_locations, only: [:show]
+  before_action :get_user_and_locations, only: [:show, :update]
 
   def start
-    # when user is logged out AKA app start
-    # Should have a button GET STARTED
-    # Click button to generate new user and be "logged in"
-    # When user logs out, they go here
     if @current_user
       redirect_to root_url
     else
@@ -29,10 +25,29 @@ class UsersController < ApplicationController
     end
   end
 
+  def update
+    if @current_user.update_attributes user_params
+      redirect_to signin_users_path
+    else
+      redirect_back(fallback_location: user_path(@current_user), alert: User.errors)
+    end
+  end
+
+  def signin
+    reset_session
+    if @current_user
+      redirect_to user_path(@current_user)
+    end
+  end
+
   private
 
   def get_user_and_locations
     @user = User.find(params[:id])
     @locations = @user.locations
+  end
+
+  def user_params
+    params.require(:user).permit(:email, :password, :password_confirmation)
   end
 end

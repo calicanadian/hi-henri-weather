@@ -1,0 +1,5 @@
+$("#user-locations-table").html("<%= escape_javascript(render('user_locations')).html_safe %>");
+
+let tempType = $(".temp_toggle.active").data('temp-type');
+toggleTempType(tempType);
+removeTemp();

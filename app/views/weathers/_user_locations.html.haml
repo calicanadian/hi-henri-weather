@@ -1,0 +1,50 @@
+.row
+  .col.s12
+    %table.highlight
+      %thead
+        %tr
+          %td Zip Code
+          %td City
+          %td Country
+          %td Current Temp
+          %td High
+          %td Low
+          %td Average
+          %td
+      %tbody
+        - if @locations.blank?
+          %tr
+            %td{colspan: "4", class: "center"}
+              No Locations Saved
+        - else
+          - @locations.each do |location|
+
+            %tr
+              %td= location&.zipcode
+              %td= location&.city
+              %td= location&.country
+              %td
+                .temp_data.fahrenheit
+                  = "#{calculate_fahrenheit(location&.temperature)}°F"
+                .temp_data.celcius
+                  = "#{calculate_celcius(location&.temperature)}°C"
+              %td
+                .temp_data.fahrenheit
+                  = "#{calculate_fahrenheit(location&.temp_min)}°F"
+                .temp_data.celcius
+                  = "#{calculate_celcius(location&.temp_min)}°C"
+              %td
+                .temp_data.fahrenheit
+                  = "#{calculate_fahrenheit(location&.temp_max)}°F"
+                .temp_data.celcius
+                  = "#{calculate_celcius(location&.temp_max)}°C"
+              %td
+                .temp_data.fahrenheit
+                  = "#{calculate_fahrenheit(get_average_temp(location&.temp_min, location&.temp_max))}°F"
+                .temp_data.celcius
+                  = "#{calculate_celcius(get_average_temp(location&.temp_min, location&.temp_max))}°C"
+              %td
+                = link_to '', class: 'refresh_temp', data: { location_zip: location.zipcode, location_id: location.id } do
+                  %i.material-icons.small cached
+                = link_to '', data: {path: saved_location_path(user_id: @current_user.id, location_id: location.id)}, class: 'remove_temp danger' do
+                  %i.material-icons.small delete

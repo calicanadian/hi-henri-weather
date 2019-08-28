@@ -1,6 +1,5 @@
 @import "materialize/components/color-variables";
 $primary-color: color("blue", "lighten-2") !default;
-$secondary-color: color("yello", "base") !default;
 @import "materialize";
 
 
@@ -11,5 +10,28 @@ nav {
       height: auto;
       vertical-align: text-bottom;
     }
+  }
+}
+
+.danger {
+  .material-icons {
+    color: #B71C1C !important;
+  }
+}
+
+.btn, .btn-small, .btn-medium, .btn-large {
+  &.temp_toggle {
+    background-color: #9e9e9e !important;
+    color: #000 !important;
+  }
+  &.active {
+    background-color: #01579b !important;
+    color: #fff !important;
+  }
+}
+
+a {
+  .material-icons {
+    pointer-events: none;
   }
 }

@@ -4,8 +4,11 @@
       .card-image.waves-effect.waves-block.waves-light
         = image_tag('vineyard.jpg', class: 'activator')
       .card-content
-      = form_for :user, url: registrations_path do |f|
-        -# = f.submit 'GET STARTED', type: 'button', id: 'registrations_submit_button', class: 'btn-large waves-effect waves-light'
-        %button{class: 'btn-large waves-effect waves-light', name: 'commit'}
-          GET STARTED
-          %i.material-icons.right person_add
+        = form_for :user, url: registrations_path do |f|
+          %button{class: 'btn-large waves-effect waves-light', type: 'submit', name: 'commit'}
+            GET STARTED
+            %i.material-icons.right person_add
+      .card-content
+        = link_to signin_users_path, class: 'btn-large red darken-4 waves-red' do
+          SIGN IN
+          %i.material-icons.right person

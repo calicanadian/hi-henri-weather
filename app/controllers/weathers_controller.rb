@@ -4,7 +4,7 @@ class WeathersController < ApplicationController
   def index
     if @current_user
       @user = @current_user
-      @locations = @user&.locations.blank? ? nil : @user.locations
+      @locations = @user&.locations.blank? ? nil : @user.locations.sorted
     else
       redirect_to start_users_path
     end

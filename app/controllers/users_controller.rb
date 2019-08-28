@@ -44,7 +44,7 @@ class UsersController < ApplicationController
 
   def get_user_and_locations
     @user = User.find(params[:id])
-    @locations = @user.locations
+    @locations = @user.locations.sorted
   end
 
   def user_params

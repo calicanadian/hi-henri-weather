@@ -1,8 +1,13 @@
 .row
   .col.s12.center
     %h1 My Saved Locations
-
-= render 'weathers/user_locations'
+  .col.s2.push-s10
+    %button{id: 'temp_f', class: 'temp_toggle btn-small waves-effect waves-light active', data: {temp_type: 'fahrenheit'}}
+      °F
+    %button{id: 'temp_c', class: 'temp_toggle btn-small waves-effect waves-light', data: {temp_type: 'celcius'}}
+      °C
+#user-locations-table
+  = render 'weathers/user_locations'
 
 .row
   .col.s12.center

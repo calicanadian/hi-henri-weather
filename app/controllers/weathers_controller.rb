@@ -28,7 +28,6 @@ class WeathersController < ApplicationController
   end
 
   def refresh_weather
-    p "PARAMS: #{params.inspect}"
     zip_code = params[:zipcode]
     locationId = params[:location_id]
     @weather = JSON.parse(get_weather_by_zip(zip_code).to_json, object_class: OpenStruct)
